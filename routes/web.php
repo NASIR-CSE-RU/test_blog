@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/posts', function () {
+    return view('admin.main');
+})->middleware('auth');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/unpublish/{id}', 'postController@unpublish')->name('unpublish');
+Route::resource('post', 'postController')->middleware('auth');
